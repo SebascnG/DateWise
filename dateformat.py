@@ -4,6 +4,15 @@ import pandas as pd
 
 
 def identify_date_format(date):
+
+    """
+    Identify date format of input date based on pre-determined widely used formats
+
+    :param date: The date given by a user to identify it's format 
+    :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+    """
+
+
     formats = [
         "%Y-%m-%d",
         "%m-%d-%Y",
@@ -50,6 +59,18 @@ def identify_date_format(date):
 
 def date_comparison(date1=None, date2=None, operation=None):
 
+    """
+    Compare two dates given by a surer based on chosen comparison operator
+
+    :param date1: Date no. 1 given by a user to be compared
+    :type date1: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param date2: Date no. 2 given by a user to be compared
+    :type date2: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    """
+
+
     if date1 and date2 and operation:
 
         date1_comparison = datetime.strptime(date1, identify_date_format(date=date1)) 
@@ -79,6 +100,14 @@ def date_comparison(date1=None, date2=None, operation=None):
 
 def week_start(date:any):
 
+    """
+    Find the start of the specific week based on a given date
+
+    :param date: The date given by a user to identify start of the week that the date is in 
+    :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+    """
+
+
     if isinstance(date, str):
 
         fmt = identify_date_format(date)
@@ -91,7 +120,18 @@ def week_start(date:any):
     
 
 def week_end(date:any, weekend:bool):
-    
+
+    """
+    Find the end of the specific week based on a given date for either week as a whole or business week
+
+    :param date: The date given by a user to identify end of the week that the date is in 
+    :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param weekend: identifier for including or excluding weekend (standard or business week)
+    :type weekend: bool
+    """
+
+
     if isinstance(date, str):
 
         fmt = identify_date_format(date)
@@ -121,7 +161,27 @@ def week_end(date:any, weekend:bool):
                 return('Today is the end of the week.')
 
 
-def date_operations(date:any, operation:str, format:str, range:int, weekend:bool):
+def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool):
+
+    """
+    Adding or subtracting date for chosen frequency in specific range for either standard or business week
+
+    :param date: date from which subtraction or addition will be calculated
+    :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param operation: subtraction or addition
+    :type operation: str
+
+    :param frequency: type of periodicity --> day/month/year
+    :type frequency: str
+
+    :param range: number of days/months/year to be added/subtracted to/from a date
+    :type range: int
+
+    :param weekend: identifier for including or excluding weekend (standard or business week)
+    :type weekend: bool
+    """
+
 
     if date and operation and range:
 
@@ -133,7 +193,7 @@ def date_operations(date:any, operation:str, format:str, range:int, weekend:bool
 
             date = datetime.strptime(date, fmt)
 
-            if format == 'day':
+            if frequency == 'day':
 
                 if weekend == False:
 
@@ -196,7 +256,7 @@ def date_operations(date:any, operation:str, format:str, range:int, weekend:bool
                             
                         return(f'Subtracted date without weekend: {date.strftime(fmt)}')
             
-            elif format == 'month':
+            elif frequency == 'month':
 
                 year = int(date.year)
                 month = int(date.month)
@@ -229,7 +289,7 @@ def date_operations(date:any, operation:str, format:str, range:int, weekend:bool
 
                     return(f'Subtracted date: {date.strftime(fmt)}')
                 
-            elif format == 'year':
+            elif frequency == 'year':
 
                 year = int(date.year)
                 month = int(date.month)
@@ -253,17 +313,23 @@ def date_operations(date:any, operation:str, format:str, range:int, weekend:bool
 
                 
 def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
-
+    # Working only with string right now, pandas and datetime conditions need to be implemented
     """
-    Working only with string right now, pandas and datetime conditions need to be implemented
+    Calculate range between two dates for standard or business week in different frquencies
+    
+    :param start: start of the period
+    :type start: str, datetime, pd._libs.tslibs.timestamps.Timestamp
 
-    parameters:
+    :param end: end of the period
+    :type end: str, datetime, pd._libs.tslibs.timestamps.Timestamp
 
-    >>>> start: begining of the date range 
-    >>>> end: begining of the date range 
-    >>>> weekend: 
-    >>>> frequency: <day, month, year>
+    :param weekend: identifier for including or excluding weekend (standard or business week)
+    :type weekend: bool
+
+    :param frequency: type of periodicity --> day/month/year
+    :type frequency: str
     """
+
 
     if start and end: 
 
@@ -364,7 +430,21 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
 
 
 def date_convert(date:any, desired_type:str, format:str):
+
+    """
+    Date conversion based on specified format according do tright party library options
+
+    :param date: date for conversion 
+    :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param desired_type: desired conversion format
+    :type desired_type: str
+
+    :param format: valid date format to be new date converted into
+    :type format: str
+    """
     
+
     date_type = str(type(date)).split("'")[1]
 
     desired_result = date_type + '-' + desired_type
@@ -384,10 +464,4 @@ def date_convert(date:any, desired_type:str, format:str):
         return conversions[desired_result]
 
 
-
-
-
-
-car = date_operations('2024-03-13', '+', 'day', 3, False)
-print(car)
 
