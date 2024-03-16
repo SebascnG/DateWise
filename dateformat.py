@@ -48,16 +48,23 @@ def identify_date_format(date):
         "%Y-%m-%dT%H %Z"
     ]
 
-    for fmt in formats:
-        try:
-            datetime.strptime(date, fmt)
-            return fmt
-        except ValueError:
-            pass
-    return "Unknown"
+    if isinstance(date, str):
+        for fmt in formats:
+            try:
+                datetime.strptime(date, fmt)
+                return fmt
+            except ValueError:
+                pass
+        return "Unknown"
+    elif isinstance(date, pd._libs.tslibs.timestamps.Timestamp):
+        return "Pandas Timestamp type, no specific format"
+    elif isinstance(date, datetime):
+        return "Datetime type, no specific format"
+    else:
+        return "Unknow data type of date variable"
 
 
-def date_comparison(date1=None, date2=None, operation=None):
+def date_comparison(date_1=None, date_2=None, operation=None):
 
     """
     Compare two dates given by a surer based on chosen comparison operator
@@ -71,31 +78,50 @@ def date_comparison(date1=None, date2=None, operation=None):
     """
 
 
-    if date1 and date2 and operation:
+    if date_1 and date_2 and operation:
 
-        date1_comparison = datetime.strptime(date1, identify_date_format(date=date1)) 
+        if isinstance(date_1, str) and isinstance(date_2, str): 
 
-        date2_comparison = datetime.strptime(date2, identify_date_format(date=date2)) 
+            date1_comparison = datetime.strptime(date_1, identify_date_format(date=date_1)) 
+            date2_comparison = datetime.strptime(date_2, identify_date_format(date=date_2)) 
 
-        if operation == "==":
+            if operation == "==":
 
-            return date1_comparison == date2_comparison
-        
-        elif operation == "<":
+                return date1_comparison == date2_comparison
+            
+            elif operation == "<":
 
-            return date1_comparison < date2_comparison
-        
-        elif operation == "<=":
+                return date1_comparison < date2_comparison
+            
+            elif operation == "<=":
 
-            return date1_comparison <= date2_comparison
-        
-        elif operation == ">":
+                return date1_comparison <= date2_comparison
+            
+            elif operation == ">":
 
-            return date1_comparison > date2_comparison
-        
-        elif operation == ">=":
+                return date1_comparison > date2_comparison
+            
+            elif operation == ">=":
 
-            return date1_comparison >= date2_comparison
+                return date1_comparison >= date2_comparison
+            
+        elif isinstance(date_1, (pd._libs.tslibs.timestamps.Timestamp, datetime)) or isinstance(date_2, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
+
+            date_1_type = type(date_1)
+            date_2_type = type(date_2)
+
+            if date_1_type != str:
+
+                date_1 = date_convert(date_1, 'str', '%Y-%m-%d')
+
+            elif date_2_type != str:
+
+                date_2 = date_convert(date_2, 'str', '%Y-%m-%d')
+
+            return date_comparison(date_1, date_2, operation)        
+        else:
+            
+            return "Unknow data type of date variable"  
 
 
 def week_start(date:any):
@@ -114,9 +140,18 @@ def week_start(date:any):
 
         weekday = datetime.strptime(date, fmt).weekday()
 
-        week_start = (datetime.strptime(date, fmt) - timedelta(days=weekday)).strftime(fmt)
+        date_start = (datetime.strptime(date, fmt) - timedelta(days=weekday)).strftime(fmt)
 
-        return week_start
+        return date_start
+    
+    elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
+
+        converted_date = date_convert(date, 'str', '%Y-%m-%d')
+
+        return week_start(converted_date)
+    
+    else:
+        return "Unknow data type of date variable"
     
 
 def week_end(date:any, weekend:bool):
@@ -142,8 +177,8 @@ def week_end(date:any, weekend:bool):
 
             if weekday < 4:   
 
-                week_end = (datetime.strptime(date, fmt) + timedelta(days=4 - weekday)).strftime(fmt)
-                return(f'Business Week ends: {week_end}')
+                date_week_end = (datetime.strptime(date, fmt) + timedelta(days=4 - weekday)).strftime(fmt)
+                return(f'Business Week ends: {date_week_end}')
 
             else:
 
@@ -153,12 +188,22 @@ def week_end(date:any, weekend:bool):
 
             if weekday < 6:   
 
-                week_end = (datetime.strptime(date, fmt) + timedelta(days=6 - weekday)).strftime(fmt)
-                return(f'Full Week ends: {week_end}')
+                date_week_end = (datetime.strptime(date, fmt) + timedelta(days=6 - weekday)).strftime(fmt)
+                return(f'Full Week ends: {date_week_end}')
 
             else:
 
                 return('Today is the end of the week.')
+    
+    elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
+
+        converted_date = date_convert(date, 'str', '%Y-%m-%d')
+
+        return week_end(converted_date, weekend)
+    
+    else:
+
+        return "Unknow data type of date variable"
 
 
 def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool):
@@ -309,7 +354,17 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
                     
                     date = datetime(year=year, month=month, day=day)
 
-                    return(f'Subtracted date: {date.strftime(fmt)}')                    
+                    return(f'Subtracted date: {date.strftime(fmt)}')  
+
+        elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
+
+            converted_date = date_convert(date, 'str', '%Y-%m-%d')
+
+            return date_operations(converted_date, operation, frequency, range, weekend)
+        
+        else:
+
+            return "Unknow data type of date variable"                  
 
                 
 def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
@@ -331,12 +386,9 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
     """
 
 
-    if start and end: 
+    if start and end and weekend and frequency: 
 
-        start_type = type(start)
-        end_type = type(start)
-
-        if start_type and end_type == str: 
+        if isinstance(start_type, str) and isinstance(end_type, str): 
 
             if date_comparison(end, start, '>'):
                 max_date = start
@@ -421,10 +473,28 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
                     days = len(days_between) % 365
 
                 return f"Difference between two dates is {years} year(s) and {days} days. If you want to see specific dates, switch to format='day'"
+        
+        elif isinstance(start, (pd._libs.tslibs.timestamps.Timestamp, datetime)) or isinstance(end, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
+            start_type = type(start)
+            end_type = type(start)
+
+            if start_type != str:
+
+                start = date_convert(start, 'str', '%Y-%m-%d')
+
+            elif end_type != str:
+
+                end = date_convert(end, 'str', '%Y-%m-%d')
+
+            return range_calculation(start, end, weekend, frequency)
+        
+        else:
+            
+            return "Unknow data type of date variable"  
     else:
 
-        print('Missing mandatory variable.')
+        return 'Missing mandatory variable.'
 
     return f'Days between two dates are: {days_between}'
 
@@ -460,8 +530,12 @@ def date_convert(date:any, desired_type:str, format:str):
 
     if date_type == desired_type:
         return 'Your date is in desired format'
-    else:
+    
+    elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime, str)):
         return conversions[desired_result]
+    
+    else:
+        return "Unknow data type of date variable"  
 
 
 
