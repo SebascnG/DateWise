@@ -1,1 +1,5 @@
-.venv/
+#Preventing from git commit 
+
+.venv/*
+*.ipynb
+*.DS_Store
