@@ -13,40 +13,48 @@ def identify_date_format(date):
     """
 
 
-    formats = [
-        "%Y-%m-%d",
-        "%m-%d-%Y",
-        "%Y/%m/%d",
-        "%d-%m-%Y",
-        "%Y.%m.%d",
-        "%m/%d/%Y",
-        "%d/%m/%Y",
-        "%Y %m %d",
-        "%m %d %Y",
-        "%d %m %Y",
-        "%Y:%m:%d",
-        "%m:%d:%Y",
-        "%d:%m:%Y",
-        "%Y %m %d %H:%M:%S",
-        "%Y %m %d %H:%M",
-        "%Y %m %d %H",
-        "%Y %m %d %I:%M:%S %p",
-        "%Y %m %d %I:%M %p",
-        "%Y %m %d %I %p",
-        "%d/%m/%Y %H:%M:%S",
-        "%d/%m/%Y %H:%M",
-        "%d/%m/%Y %H",
-        "%d/%m/%Y %I:%M:%S %p",
-        "%d/%m/%Y %I:%M %p",
-        "%d/%m/%Y %I %p",
-        "%Y-%m-%dT%H:%M:%S",
-        "%Y-%m-%dT%H:%M",
-        "%Y-%m-%dT%H",
-        "%Y-%m-%dT%H:%M:%S.%f",
-        "%Y-%m-%dT%H:%M:%S %Z",
-        "%Y-%m-%dT%H:%M %Z",
-        "%Y-%m-%dT%H %Z"
-    ]
+    formats = ([
+        "%m/%d/%Y", "%m-%d-%Y",
+        "%d/%m/%Y", "%d-%m-%Y",
+        "%Y/%m/%d", "%Y-%m-%d",
+        "%Y/%m/%d", "%Y-%m-%d",
+        "%d/%m/%Y", "%d-%m-%Y",
+        "%Y %m %d", "%Y-%m-%d",
+        "%m %d %Y", "%m-%d-%Y",
+        "%d %m %Y", "%d-%m-%Y",
+        "%Y:%m:%d", "%Y-%m-%d",
+        "%m:%d:%Y", "%m-%d-%Y",
+        "%d:%m:%Y", "%d-%m-%Y",
+        "%Y %m %d %H:%M:%S", "%Y-%m-%d %H:%M:%S",
+        "%Y %m %d %H:%M", "%Y-%m-%d %H:%M",
+        "%Y %m %d %H", "%Y-%m-%d %H",
+        "%Y %m %d %I:%M:%S %p", "%Y-%m-%d %I:%M:%S %p",
+        "%Y %m %d %I:%M %p", "%Y-%m-%d %I:%M %p",
+        "%Y %m %d %I %p", "%Y-%m-%d %I %p",
+        "%d/%m/%Y %H:%M:%S", "%d-%m-%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M", "%d-%m-%Y %H:%M",
+        "%d/%m/%Y %H", "%d-%m-%Y %H",
+        "%d/%m/%Y %I:%M:%S %p", "%d-%m-%Y %I:%M:%S %p",
+        "%d/%m/%Y %I:%M %p", "%d-%m-%Y %I:%M %p",
+        "%d/%m/%Y %I %p", "%d-%m-%Y %I %p",
+        "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d %H:%M", "%Y-%m-%d %H:%M",
+        "%Y-%m-%d %H", "%Y-%m-%d %H",
+        "%Y-%m-%d %I:%M:%S %p", "%Y-%m-%d %I:%M:%S %p",
+        "%Y-%m-%d %I:%M %p", "%Y-%m-%d %I:%M %p",
+        "%Y-%m-%d %I %p", "%Y-%m-%d %I %p",
+        "%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S",
+        "%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S",
+        "%y-%m-%d %H:%M:%S", "%y/%m/%d %H:%M:%S",
+        "%y-%m-%d %H:%M", "%y/%m/%d %H:%M",
+        "%y-%m-%d %H", "%y/%m/%d %H",
+        "%y-%m-%d %I:%M:%S %p", "%y/%m/%d %I:%M:%S %p",
+        "%y-%m-%d %I:%M %p", "%y/%m/%d %I:%M %p",
+        "%y-%m-%d %I %p", "%y/%m/%d %I %p",
+    ])
+
+
+
 
     if isinstance(date, str):
         for fmt in formats:
@@ -55,7 +63,7 @@ def identify_date_format(date):
                 return fmt
             except ValueError:
                 pass
-        return "Unknown"
+        return False
     elif isinstance(date, pd._libs.tslibs.timestamps.Timestamp):
         return "Pandas Timestamp type, no specific format"
     elif isinstance(date, datetime):
@@ -121,7 +129,7 @@ def date_comparison(date_1=None, date_2=None, operation=None):
             return date_comparison(date_1, date_2, operation)        
         else:
             
-            return "Unknow data type of date variable"  
+            return "Provided inputs are uncomperable"  
 
 
 def week_start(date:any):
@@ -138,11 +146,13 @@ def week_start(date:any):
 
         fmt = identify_date_format(date)
 
-        weekday = datetime.strptime(date, fmt).weekday()
+        if fmt:
 
-        date_start = (datetime.strptime(date, fmt) - timedelta(days=weekday)).strftime(fmt)
+            weekday = datetime.strptime(date, fmt).weekday()
 
-        return date_start
+            date_start = (datetime.strptime(date, fmt) - timedelta(days=weekday)).strftime(fmt)
+
+            return date_start
     
     elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
@@ -171,29 +181,39 @@ def week_end(date:any, weekend:bool):
 
         fmt = identify_date_format(date)
 
-        weekday = datetime.strptime(date, fmt).weekday()
+        if fmt:
 
-        if weekend == False:
+            weekday = datetime.strptime(date, fmt).weekday()
 
-            if weekday < 4:   
+            if weekend == False:
 
-                date_week_end = (datetime.strptime(date, fmt) + timedelta(days=4 - weekday)).strftime(fmt)
-                return(f'Business Week ends: {date_week_end}')
+                if weekday < 3:   
 
-            else:
+                    date_week_end = (datetime.strptime(date, fmt) + timedelta(days=4 - weekday)).strftime(fmt)
+                    return(f'Business Week ends: {date_week_end}')
+                
+                elif weekday == 4:
 
-                return('Businees Week has already ended.')
+                    return('Today is the end of the business week.') 
 
-        elif weekend == True:
+                else:
 
-            if weekday < 6:   
+                    return('Businees Week has already ended.')
 
-                date_week_end = (datetime.strptime(date, fmt) + timedelta(days=6 - weekday)).strftime(fmt)
-                return(f'Full Week ends: {date_week_end}')
+            elif weekend == True:
 
-            else:
+                if weekday < 6:   
 
-                return('Today is the end of the week.')
+                    date_week_end = (datetime.strptime(date, fmt) + timedelta(days=6 - weekday)).strftime(fmt)
+                    return(f'Full Week ends: {date_week_end}')
+
+                else:
+
+                    return('Today is the end of the full week.')
+                
+        else:
+
+            return ("Couldn't process such date format.")
     
     elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
@@ -240,7 +260,7 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
 
             if frequency == 'day':
 
-                if weekend == False:
+                if weekend == True:
 
                     if operation == '+' : 
 
@@ -259,7 +279,7 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
                                 date += timedelta(days=1)
                                 weekday = date.weekday()
 
-                        return(f'Added date without weekend: {date.strftime(fmt)}')
+                        return(f'Added date with weekend: {date.strftime(fmt)}')
                         
                     elif operation == '-':
 
@@ -279,9 +299,9 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
                                 weekday = date.weekday()
 
 
-                        return(f'Subtracted date without weekend: {date.strftime(fmt)}')
+                        return(f'Subtracted date with weekend: {date.strftime(fmt)}')
 
-                elif weekend == True:
+                elif weekend == False:
 
                     if operation == '+' : 
 
@@ -290,7 +310,7 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
                             date += timedelta(days=1)
                             range -= 1
 
-                        return(f'Added date with weekend: {date.strftime(fmt)}')
+                        return(f'Added date without weekend: {date.strftime(fmt)}')
                         
                     elif operation == '-':
 
@@ -386,35 +406,26 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
     """
 
 
-    if start and end and weekend and frequency: 
+    if start and end and frequency: 
 
-        if isinstance(start_type, str) and isinstance(end_type, str): 
+        if isinstance(start, str) and isinstance(end, str): 
 
             if date_comparison(end, start, '>'):
-                max_date = start
-                min_date = end
-            else:
                 max_date = end
                 min_date = start
+            else:
+                max_date = start
+                min_date = end
 
             max_format = identify_date_format(start)
-            max_date = datetime.strptime(start, max_format)
+            max_date = datetime.strptime(end, max_format)
 
             min_format = identify_date_format(end)
-            min_date = datetime.strptime(end, min_format)
+            min_date = datetime.strptime(start, min_format)
 
             days_between = []
 
             if weekend:
-
-                while max_date != min_date + timedelta(days=1):
-
-                    max_date -= timedelta(days=1)
-                    days_between.append(max_date.strftime(max_format))
-                
-                output = f'Days between two dates are: {days_between}'
-
-            else:
 
                 while max_date != min_date + timedelta(days=1):
 
@@ -424,11 +435,20 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
                     else:
                         pass
 
-                output =  f'Business days between two dates are: {days_between}'
+                output =  f'Business days between two dates are: {days_between}'                
+
+            else:
+
+                while max_date != min_date + timedelta(days=1):
+
+                    max_date -= timedelta(days=1)
+                    days_between.append(max_date.strftime(max_format))
+                
+                output = f'Days between two dates are: {days_between}'
 
             if frequency == 'day':
 
-                return f'Difference between two dates is {output} day(s).'
+                return output
             
             elif frequency == 'week':
 
@@ -436,8 +456,15 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
 
                 if type(week_difference) != int:
 
-                    weeks = int(week_difference)
-                    days = len(days_between) % 7
+                    if weekend:
+                        
+                        weeks = int(week_difference)
+                        days = len(days_between) % 5
+
+                    else:
+
+                        weeks = int(week_difference)
+                        days = len(days_between) % 7
 
                 return f"Difference between two dates is {weeks} week(s) and {days} days. If you want to see specific dates, switch to format='day'"
 
@@ -477,13 +504,18 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
         elif isinstance(start, (pd._libs.tslibs.timestamps.Timestamp, datetime)) or isinstance(end, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
             start_type = type(start)
-            end_type = type(start)
+            end_type = type(end)
 
-            if start_type != str:
+            if start_type != str and end_type != str:
+
+                start = date_convert(start, 'str', '%Y-%m-%d')
+                end = date_convert(end, 'str', '%Y-%m-%d')
+            
+            elif start_type != str and end_type == str:
 
                 start = date_convert(start, 'str', '%Y-%m-%d')
 
-            elif end_type != str:
+            elif end_type != str and start_type == str:
 
                 end = date_convert(end, 'str', '%Y-%m-%d')
 
@@ -517,15 +549,22 @@ def date_convert(date:any, desired_type:str, format:str):
 
     date_type = str(type(date)).split("'")[1]
 
-    desired_result = date_type + '-' + desired_type
+    conversions = {
+        'pandas._libs.tslibs.timestamps.Timestamp'  : 'pandas', 
+        'datetime.datetime'                         : 'datetime.datetime', 
+        'str'                                       : 'str', 
+        'datetime'                                  : 'datetime.datetime'
+    }
+
+    desired_result = conversions[date_type] + '-' + desired_type
 
     conversions = {
         'str-pandas'                 : pd.to_datetime(date) if isinstance(date, str) else None, 
         'str-datetime'               : datetime.strptime(date, format) if isinstance(date, str) else None,
         'pandas-str'                 : date.strftime(format) if isinstance(date, pd._libs.tslibs.timestamps.Timestamp) else None,
-        'pandas-datetime'            : date.to_pydate(date) if isinstance(date, pd._libs.tslibs.timestamps.Timestamp) else None,
+        'pandas-datetime'            : date.to_pydatetime(date) if isinstance(date, pd._libs.tslibs.timestamps.Timestamp) else None,
         'datetime.datetime-str'      : date.strftime(format) if isinstance(date, datetime) else None,
-        'datetime.datetime-pandas'   : pd.Timestamp(date).strftime(format) if isinstance(date, datetime) else None
+        'datetime.datetime-pandas'   : pd.Timestamp(date) if isinstance(date, datetime) else None
     }
 
     if date_type == desired_type:
@@ -539,3 +578,7 @@ def date_convert(date:any, desired_type:str, format:str):
 
 
 
+start = '2024-03-19'
+end =  pd.Timestamp('2024-04-02 12:30:00')
+
+range_calculation(start=start, end=end, weekend=False, frequency='day')
