@@ -3,3 +3,6 @@
 .venv/*
 *.ipynb
 *.DS_Store
+docs/_build/*
+docs/static
+docs/templates
