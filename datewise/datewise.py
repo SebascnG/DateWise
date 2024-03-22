@@ -5,7 +5,7 @@ import pandas as pd
 def identify_date_format(date):
 
     """
-    Identify date format of input date based on pre-determined widely used formats
+    Identify date format of input date based on pre-determined widely used formats.
 
     :param date: The date given by a user to identify it's format 
     :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
