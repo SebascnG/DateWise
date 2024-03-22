@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
 import pandas as pd
 
 
@@ -575,10 +574,3 @@ def date_convert(date:any, desired_type:str, format:str):
     
     else:
         return "Unknow data type of date variable"  
-
-
-
-start = '2024-03-19'
-end =  pd.Timestamp('2024-04-02 12:30:00')
-
-range_calculation(start=start, end=end, weekend=False, frequency='day')

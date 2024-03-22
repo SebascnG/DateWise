@@ -1,4 +1,4 @@
-from ..datewise import *
+from datewise.datewise import *
 from datetime import datetime
 import pytest
 import pandas as pd
