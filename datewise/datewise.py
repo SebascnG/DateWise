@@ -12,7 +12,7 @@ def identify_date_format(date):
     """
 
 
-    formats = ([
+    formats = [
         "%m/%d/%Y", "%m-%d-%Y",
         "%d/%m/%Y", "%d-%m-%Y",
         "%Y/%m/%d", "%Y-%m-%d",
@@ -50,7 +50,7 @@ def identify_date_format(date):
         "%y-%m-%d %I:%M:%S %p", "%y/%m/%d %I:%M:%S %p",
         "%y-%m-%d %I:%M %p", "%y/%m/%d %I:%M %p",
         "%y-%m-%d %I %p", "%y/%m/%d %I %p",
-    ])
+    ]
 
 
 
