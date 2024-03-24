@@ -478,7 +478,7 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
 
                 return f"Difference between two dates is {months} month(s) and {days} days. If you want to see specific dates, switch to format='day'"
             
-            elif frequency == 'quarter':
+            # elif frequency == 'quarter':
 
                 quarter_difference = len(days_between) / 90
 
