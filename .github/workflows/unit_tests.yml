@@ -1,13 +1,17 @@
-name: Run Unit Tests on Pull Request
+name: Run Unit Tests on Pull Request and Upload to PyPi
 
 on:
   pull_request:
     branches:
       - '*'
+  push:
+    branches:
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
 
     steps:
     - name: Checkout code
@@ -26,3 +30,28 @@ jobs:
       run: |
         pytest tests/tests.py  
 
+  upload_to_pypi:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Build and Upload to PyPi
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        GH_PAT: ${{ secrets.GH_PAT }}
