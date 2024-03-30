@@ -2,13 +2,16 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 
-def identify_date_format(date):
+def identify_date_format(date:any) -> str:
 
     """
     Identify date format of input date based on pre-determined widely used formats.
 
     :param date: The date given by a user to identify it's format 
     :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :return: Date format, if available, else message about error
+    :rtype: str
     """
 
 
@@ -71,7 +74,7 @@ def identify_date_format(date):
         return "Unknow data type of date variable"
 
 
-def date_comparison(date_1=None, date_2=None, operation=None):
+def date_comparison(date_1=any, date_2=any, operation=str) -> bool:
 
     """
     Compare two dates given by a surer based on chosen comparison operator
@@ -81,6 +84,12 @@ def date_comparison(date_1=None, date_2=None, operation=None):
 
     :param date2: Date no. 2 given by a user to be compared
     :type date2: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param operation: Any valid comparison sign in string format
+    :type operation: str 
+    
+    :return: True or False value based on a result
+    :rtype: bool
 
     """
 
@@ -131,13 +140,16 @@ def date_comparison(date_1=None, date_2=None, operation=None):
             return "Provided inputs are uncomperable"  
 
 
-def week_start(date:any):
+def week_start(date:any) -> str:
 
     """
     Find the start of the specific week based on a given date
 
     :param date: The date given by a user to identify start of the week that the date is in 
     :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :return: Date representing start of the week
+    :rtype: str
     """
 
 
@@ -163,7 +175,7 @@ def week_start(date:any):
         return "Unknow data type of date variable"
     
 
-def week_end(date:any, weekend:bool):
+def week_end(date:any, weekend:bool) -> str:
 
     """
     Find the end of the specific week based on a given date for either week as a whole or business week
@@ -173,6 +185,9 @@ def week_end(date:any, weekend:bool):
 
     :param weekend: identifier for including or excluding weekend (standard or business week)
     :type weekend: bool
+
+    :return: Date representing end of the full or business week
+    :rtype: str
     """
 
 
@@ -225,7 +240,7 @@ def week_end(date:any, weekend:bool):
         return "Unknow data type of date variable"
 
 
-def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool):
+def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool) -> str:
 
     """
     Adding or subtracting date for chosen frequency in specific range for either standard or business week
@@ -244,6 +259,9 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
 
     :param weekend: identifier for including or excluding weekend (standard or business week)
     :type weekend: bool
+
+    :return: New day after subtraction or addition
+    :rtype: str
     """
 
 
@@ -387,7 +405,7 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
 
                 
 def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
-    # Working only with string right now, pandas and datetime conditions need to be implemented
+
     """
     Calculate range between two dates for standard or business week in different frquencies
     
@@ -402,6 +420,9 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
 
     :param frequency: type of periodicity --> day/month/year
     :type frequency: str
+
+    :return: Range of days/months/year between two given dates
+    :rtype: list
     """
 
 
@@ -543,6 +564,9 @@ def date_convert(date:any, desired_type:str, format:str):
 
     :param format: valid date format to be new date converted into
     :type format: str
+
+    :return: Converted date
+    :rtype: str, datetime, pd._libs.tslibs.timestamps.Timestamp
     """
     
 
