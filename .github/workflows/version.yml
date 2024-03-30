@@ -16,10 +16,11 @@ jobs:
       - name: Check for Version Change
         run: |
           echo default
-          previous_version=$(git grep -oE 'version="[0-9.]+"' master:setup.py | cut -d '"' -f 2)
-          echo $previous_version
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $current_version
+          git checkout master
+          previous_version=$(git grep -oE 'version="[0-9.]+"' master:setup.py | cut -d '"' -f 2)
+          echo $previous_version
           if [ "$previous_version" != "$current_version" ] && [ "$(printf "%s\n" "$previous_version" "$current_version" | sort -V | head -n1)" = "$current_version" ]; then
             echo "Version changed from $previous_version to $current_version"
             exit 0  # Exit with success status to allow the pull request merge
