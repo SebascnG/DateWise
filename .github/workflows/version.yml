@@ -16,7 +16,7 @@ jobs:
       - name: Check for Version Change
         run: |
           echo default
-          previous_version=$(git show $default:setup.py | grep -oE 'version="[0-9.]+"' | cut -d '"' -f 2)
+          previous_version=$(git show ${{ github.base_ref }}:setup.py | grep -oE 'version="[0-9.]+"' | cut -d '"' -f 2)
           echo previous_version
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo current_version
@@ -28,5 +28,3 @@ jobs:
             exit 1  # Exit with failure status to disallow the pull request merge
           fi
 
-    env:
-        default: ${{ github.base_ref }}
