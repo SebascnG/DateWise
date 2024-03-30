@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+from typing import Union
 import pandas as pd
 
 
-def identify_date_format(date:any) -> str:
+def identify_date_format(date: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
 
     """
     Identify date format of input date based on pre-determined widely used formats.
@@ -74,7 +75,7 @@ def identify_date_format(date:any) -> str:
         return "Unknow data type of date variable"
 
 
-def date_comparison(date_1=any, date_2=any, operation=str) -> bool:
+def date_comparison(date_1= Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], date_2= Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], operation=str) -> bool:
 
     """
     Compare two dates given by a surer based on chosen comparison operator
@@ -140,7 +141,7 @@ def date_comparison(date_1=any, date_2=any, operation=str) -> bool:
             return "Provided inputs are uncomperable"  
 
 
-def week_start(date:any) -> str:
+def week_start(date: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
 
     """
     Find the start of the specific week based on a given date
@@ -175,7 +176,7 @@ def week_start(date:any) -> str:
         return "Unknow data type of date variable"
     
 
-def week_end(date:any, weekend:bool) -> str:
+def week_end(date: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool) -> str:
 
     """
     Find the end of the specific week based on a given date for either week as a whole or business week
@@ -240,7 +241,7 @@ def week_end(date:any, weekend:bool) -> str:
         return "Unknow data type of date variable"
 
 
-def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool) -> str:
+def date_operations(date: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], operation:str, frequency:str, range:int, weekend:bool) -> str:
 
     """
     Adding or subtracting date for chosen frequency in specific range for either standard or business week
@@ -404,7 +405,7 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
             return "Unknow data type of date variable"                  
 
                 
-def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
+def range_calculation(start: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], end: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool, frequency:str) -> list:
 
     """
     Calculate range between two dates for standard or business week in different frquencies
@@ -551,7 +552,7 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
     return f'Days between two dates are: {days_between}'
 
 
-def date_convert(date:any, desired_type:str, format:str):
+def date_convert(date: Union[str, datetime.datetime, pd._libs.tslibs.timestamps.Timestamp], desired_type:str, format:str):
 
     """
     Date conversion based on specified format according do tright party library options
