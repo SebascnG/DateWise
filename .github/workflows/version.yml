@@ -19,8 +19,12 @@ jobs:
           echo $current_version
 
       - name: Check for old Version
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Check for old Version
         run: |
-          git checkout master
           previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $previous_version
 
