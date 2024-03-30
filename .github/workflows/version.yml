@@ -15,7 +15,7 @@ jobs:
         
       - name: Check for Version Change
         run: |
-          previous_version=$(git show master:setup.py | grep -oE '"version"[[:space:]]*:[[:space:]]*"[^"]+"' | grep -oE '"[^"]+"' | tr -d '"')
+          previous_version=$(git show $default-branch:setup.py | grep -oE '"version"[[:space:]]*:[[:space:]]*"[^"]+"' | grep -oE '"[^"]+"' | tr -d '"')
           
           current_version=$(grep -oE '"version"[[:space:]]*:[[:space:]]*"[^"]+"' | grep -oE '"[^"]+"' | tr -d '"')
           
