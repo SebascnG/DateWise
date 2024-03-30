@@ -29,7 +29,9 @@ jobs:
           echo $previous_version
 
       - name: Compare versions
-        run: |        
+        run: |
+          IFS='.' read -ra prev_version_arr <<< "$previous_version"
+          IFS='.' read -ra curr_version_arr <<< "$current_version"        
           if [ "$previous_version" -lt "$current_version" ]; then
             echo "Version changed from $previous_version to $current_version"
             exit 0  # Exit with success status to allow the pull request merge
