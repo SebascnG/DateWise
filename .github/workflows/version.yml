@@ -3,7 +3,7 @@ name: Check Version Change
 on:
   pull_request:
     branches:
-      - master  
+      - $default-branch  
 
 jobs:
   check_version_change:
@@ -15,7 +15,7 @@ jobs:
         
       - name: Check for Version Change
         run: |
-          previous_version=$(git show master:setup.py | grep -oP '(?<=version=")([^"]+)')
+          previous_version=$(git show $default-branch:setup.py | grep -oP '(?<=version=")([^"]+)')
           
           current_version=$(grep -oP '(?<=version=")([^"]+)' setup.py)
           
