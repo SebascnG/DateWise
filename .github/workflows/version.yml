@@ -15,9 +15,9 @@ jobs:
         
       - name: Check for Version Change
         run: |
-          previous_version=$(git show master:DateWise/setup.py | grep -oP '(?<=version=")([^"]+)')
+          previous_version=$(git show origin/master:setup.py | grep -oP '(?<=version=")([^"]+)')
           
-          current_version=$(grep -oP '(?<=version=")([^"]+)' DateWise/setup.py)
+          current_version=$(grep -oP '(?<=version=")([^"]+)' setup.py)
           
           if [ "$previous_version" != "$current_version" ] && [ "$(printf "%s\n" "$previous_version" "$current_version" | sort -V | head -n1)" = "$current_version" ]; then
             echo "Version changed from $previous_version to $current_version"
