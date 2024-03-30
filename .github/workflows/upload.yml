@@ -1,4 +1,4 @@
-name: Run Unit Tests on Pull Request and Upload to PyPi
+name: Run Upload to PyPi on Push into master
 
 on:
   push:
