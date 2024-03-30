@@ -1,14 +1,18 @@
 from datetime import datetime, timedelta
+from typing import Union
 import pandas as pd
 
 
-def identify_date_format(date):
+def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
 
     """
     Identify date format of input date based on pre-determined widely used formats.
 
     :param date: The date given by a user to identify it's format 
     :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :return: Date format, if available, else message about error
+    :rtype: str
     """
 
 
@@ -71,7 +75,7 @@ def identify_date_format(date):
         return "Unknow data type of date variable"
 
 
-def date_comparison(date_1=None, date_2=None, operation=None):
+def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], date_2= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], operation=str) -> bool:
 
     """
     Compare two dates given by a surer based on chosen comparison operator
@@ -81,6 +85,12 @@ def date_comparison(date_1=None, date_2=None, operation=None):
 
     :param date2: Date no. 2 given by a user to be compared
     :type date2: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :param operation: Any valid comparison sign in string format
+    :type operation: str 
+    
+    :return: True or False value based on a result
+    :rtype: bool
 
     """
 
@@ -131,13 +141,16 @@ def date_comparison(date_1=None, date_2=None, operation=None):
             return "Provided inputs are uncomperable"  
 
 
-def week_start(date:any):
+def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
 
     """
     Find the start of the specific week based on a given date
 
     :param date: The date given by a user to identify start of the week that the date is in 
     :type date: str, datetime, pd._libs.tslibs.timestamps.Timestamp
+
+    :return: Date representing start of the week
+    :rtype: str
     """
 
 
@@ -163,7 +176,7 @@ def week_start(date:any):
         return "Unknow data type of date variable"
     
 
-def week_end(date:any, weekend:bool):
+def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool) -> str:
 
     """
     Find the end of the specific week based on a given date for either week as a whole or business week
@@ -173,6 +186,9 @@ def week_end(date:any, weekend:bool):
 
     :param weekend: identifier for including or excluding weekend (standard or business week)
     :type weekend: bool
+
+    :return: Date representing end of the full or business week
+    :rtype: str
     """
 
 
@@ -225,7 +241,7 @@ def week_end(date:any, weekend:bool):
         return "Unknow data type of date variable"
 
 
-def date_operations(date:any, operation:str, frequency:str, range:int, weekend:bool):
+def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], operation:str, frequency:str, range:int, weekend:bool) -> str:
 
     """
     Adding or subtracting date for chosen frequency in specific range for either standard or business week
@@ -244,6 +260,9 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
 
     :param weekend: identifier for including or excluding weekend (standard or business week)
     :type weekend: bool
+
+    :return: New day after subtraction or addition
+    :rtype: str
     """
 
 
@@ -386,8 +405,8 @@ def date_operations(date:any, operation:str, frequency:str, range:int, weekend:b
             return "Unknow data type of date variable"                  
 
                 
-def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
-    # Working only with string right now, pandas and datetime conditions need to be implemented
+def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], end: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool, frequency:str) -> list:
+
     """
     Calculate range between two dates for standard or business week in different frquencies
     
@@ -402,6 +421,9 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
 
     :param frequency: type of periodicity --> day/month/year
     :type frequency: str
+
+    :return: Range of days/months/year between two given dates
+    :rtype: list
     """
 
 
@@ -530,7 +552,7 @@ def range_calculation(start:any, end:any, weekend:bool, frequency:str) -> list:
     return f'Days between two dates are: {days_between}'
 
 
-def date_convert(date:any, desired_type:str, format:str):
+def date_convert(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], desired_type:str, format:str):
 
     """
     Date conversion based on specified format according do tright party library options
@@ -543,6 +565,9 @@ def date_convert(date:any, desired_type:str, format:str):
 
     :param format: valid date format to be new date converted into
     :type format: str
+
+    :return: Converted date
+    :rtype: str, datetime, pd._libs.tslibs.timestamps.Timestamp
     """
     
 
@@ -550,9 +575,8 @@ def date_convert(date:any, desired_type:str, format:str):
 
     conversions = {
         'pandas._libs.tslibs.timestamps.Timestamp'  : 'pandas', 
-        'datetime.datetime'                         : 'datetime.datetime', 
-        'str'                                       : 'str', 
-        'datetime'                                  : 'datetime.datetime'
+        'datetime.datetime'                         : 'datetime', 
+        'str'                                       : 'str'
     }
 
     desired_result = conversions[date_type] + '-' + desired_type
@@ -562,8 +586,8 @@ def date_convert(date:any, desired_type:str, format:str):
         'str-datetime'               : datetime.strptime(date, format) if isinstance(date, str) else None,
         'pandas-str'                 : date.strftime(format) if isinstance(date, pd._libs.tslibs.timestamps.Timestamp) else None,
         'pandas-datetime'            : date.to_pydatetime(date) if isinstance(date, pd._libs.tslibs.timestamps.Timestamp) else None,
-        'datetime.datetime-str'      : date.strftime(format) if isinstance(date, datetime) else None,
-        'datetime.datetime-pandas'   : pd.Timestamp(date) if isinstance(date, datetime) else None
+        'datetime-str'               : date.strftime(format) if isinstance(date, datetime) else None,
+        'datetime-pandas'            : pd.Timestamp(date) if isinstance(date, datetime) else None
     }
 
     if date_type == desired_type:
