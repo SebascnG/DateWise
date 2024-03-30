@@ -50,4 +50,4 @@ jobs:
     - name: Build and Upload to PyPi
       run: |
         python setup.py sdist bdist_wheel
-        twine upload --username __token__ --password ${{ secrets.PYPI_API_TOKEN }} dist/*
+        twine upload --username __token__ --password ${{ secrets.PYPI_API_TOKEN }} dist/* 
