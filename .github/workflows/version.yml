@@ -15,7 +15,7 @@ jobs:
         
       - name: Check for Version Change
         run: |
-          previous_version=$(git show origin/master:setup.py | grep -oP '(?<=version=")([^"]+)')
+          previous_version=$(git show master:setup.py | grep -oP '(?<=version=")([^"]+)')
           
           current_version=$(grep -oP '(?<=version=")([^"]+)' setup.py)
           
