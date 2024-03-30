@@ -1,0 +1,28 @@
+name: Check Version Change
+
+on:
+  pull_request:
+    branches:
+      - master  
+
+jobs:
+  check_version_change:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Check for Version Change
+        run: |
+          previous_version=$(git show origin/master:DateWise/setup.py | grep -oP '(?<=version=")([^"]+)')
+          
+          current_version=$(grep -oP '(?<=version=")([^"]+)' DateWise/setup.py)
+          
+          if [ "$previous_version" != "$current_version" ] && [ "$(printf "%s\n" "$previous_version" "$current_version" | sort -V | head -n1)" = "$current_version" ]; then
+            echo "Version changed from $previous_version to $current_version"
+            exit 0  # Exit with success status to allow the pull request merge
+          else
+            echo "Version change detected, but the new version isn't greater than the old one"
+            exit 1  # Exit with failure status to disallow the pull request merge
+          fi
