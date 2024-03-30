@@ -26,3 +26,6 @@ jobs:
             echo "Version change detected, but the new version isn't greater than the old one"
             exit 1  # Exit with failure status to disallow the pull request merge
           fi
+
+    env:
+        default-branch: ${{ github.ref }}
