@@ -21,9 +21,9 @@ jobs:
       - name: Check for old Version
         run: |
           git checkout master
-          previous_version=$(git grep -oE 'version="[0-9.]+"' master:setup.py | cut -d '"' -f 2)
+          previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $previous_version
-          
+
       - name: Compare versions
         run: |        
           if [ "$previous_version" != "$current_version" ] && [ "$(printf "%s\n" "$previous_version" "$current_version" | sort -V | head -n1)" = "$current_version" ]; then
