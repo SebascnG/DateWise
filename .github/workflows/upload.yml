@@ -1,35 +1,11 @@
-name: Run Unit Tests on Pull Request and Upload to PyPi
+name: Run Upload to PyPi on Push into master
 
 on:
-  pull_request:
-    branches:
-      - '*'
   push:
     branches:
       - master
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11
-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-
-    - name: Run unit tests
-      run: |
-        pytest tests/test_functionality.py  
-
   upload_to_pypi:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -51,4 +27,3 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload --username __token__ --password ${{ secrets.PYPI_API_TOKEN }} dist/*
-

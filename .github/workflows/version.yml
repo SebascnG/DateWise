@@ -1,0 +1,40 @@
+name: Check Version Change
+
+on:
+  pull_request:
+    branches:
+      - master 
+
+jobs:
+  check_version_change:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Check for current Version
+        run: |
+          current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
+          echo $current_version
+
+      - name: Check for old Version
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Check for old Version
+        run: |
+          previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
+          echo $previous_version
+
+      - name: Compare versions
+        run: |      
+          if [ $previous_version -lt $current_version ]; then
+            echo "Version changed from $previous_version to $current_version"
+            exit 0  # Exit with success status to allow the pull request merge
+          else
+            echo "Version change detected, but the new version isn't greater than the old one"
+            exit 1  # Exit with failure status to disallow the pull request merge
+          fi
+
