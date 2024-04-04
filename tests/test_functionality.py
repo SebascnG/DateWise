@@ -25,7 +25,10 @@ def test3_identify_date_format_unknown_data_type():
 
     today = 123
 
-    assert identify_date_format(today) == "Unknow data type of date variable"
+    with pytest.raises(ValueError) as exc_info:
+        identify_date_format(today)
+
+    assert str(exc_info.value) == "Unknow data type of date variable"
 
 
 def test4_identify_date_format_unknown_date_format():
@@ -126,7 +129,10 @@ def test4_week_start_unknown_date_type():
 
     date = 123
 
-    assert week_start(date) == "Unknow data type of date variable"
+    with pytest.raises(ValueError) as exc_info:
+        week_start(date)
+
+    assert str(exc_info.value) == "Unknow data type of date variable"
 
 
 # week_end
@@ -191,7 +197,10 @@ def test9_week_end_date_as_string_weekend_true_date_unknown_format():
 
     date = 'abc'
 
-    assert week_end(date, True) == "Couldn't process such date format."
+    with pytest.raises(ValueError) as exc_info:
+        week_end(date, True)
+
+    assert str(exc_info.value) == "Couldn't process such date format."
 
 
 # date_operations
@@ -201,7 +210,7 @@ def test1_date_operations_date_string_operation_addition_frequency_day_weekend_f
     date = '2024-03-19'
     range = 5
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-03-24'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-03-26'
 
 
 def test2_date_operations_date_timestamp_operation_addition_frequency_day_weekend_false():
@@ -209,7 +218,7 @@ def test2_date_operations_date_timestamp_operation_addition_frequency_day_weeken
     date = pd.Timestamp('2024-03-19 12:30:00')
     range = 5
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-03-24'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-03-26'
 
 
 def test3_date_operations_date_datetime_operation_addition_frequency_day_weekend_false():
@@ -217,7 +226,7 @@ def test3_date_operations_date_datetime_operation_addition_frequency_day_weekend
     date = datetime(year=2024, month=3, day=19)
     range = 9
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-03-28'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=False) == 'Added date without weekend: 2024-04-01'
 
 
 def test4_date_operations_date_string_operation_addition_frequency_month_weekend_false():
@@ -273,7 +282,7 @@ def test10_date_operations_date_string_operation_addition_frequency_day_weekend_
     date = '2024-03-19'
     range = 5
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-03-26'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-03-24'
 
 
 def test11_date_operations_date_timestamp_operation_addition_frequency_day_weekend_true():
@@ -281,7 +290,7 @@ def test11_date_operations_date_timestamp_operation_addition_frequency_day_weeke
     date = pd.Timestamp('2024-03-19 12:30:00')
     range = 5
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-03-26'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-03-24'
 
 
 def test12_date_operations_date_datetime_operation_addition_frequency_day_weekend_true():
@@ -289,7 +298,7 @@ def test12_date_operations_date_datetime_operation_addition_frequency_day_weeken
     date = datetime(year=2024, month=3, day=19)
     range = 9
 
-    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-04-01'
+    assert date_operations(date=date, operation='+', frequency='day', range=range, weekend=True) == 'Added date with weekend: 2024-03-28'
 
 
 def test13_date_operations_date_string_operation_addition_frequency_month_weekend_true():
@@ -345,7 +354,7 @@ def test19_date_operations_date_string_operation_addition_frequency_day_weekend_
     date = '2024-03-19'
     range = 5
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-14'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-12'
 
 
 def test20_date_operations_date_timestamp_operation_addition_frequency_day_weekend_false():
@@ -353,7 +362,7 @@ def test20_date_operations_date_timestamp_operation_addition_frequency_day_weeke
     date = pd.Timestamp('2024-03-19 12:30:00')
     range = 5
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-14'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-12'
 
 
 def test21_date_operations_date_datetime_operation_addition_frequency_day_weekend_false():
@@ -361,7 +370,7 @@ def test21_date_operations_date_datetime_operation_addition_frequency_day_weeken
     date = datetime(year=2024, month=3, day=19)
     range = 9
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-10'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=False) == 'Subtracted date without weekend: 2024-03-06'
 
 
 def test22_date_operations_date_string_operation_addition_frequency_month_weekend_false():
@@ -417,7 +426,7 @@ def test28_date_operations_date_string_operation_addition_frequency_day_weekend_
     date = '2024-03-19'
     range = 5
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-12'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-14'
 
 
 def test29_date_operations_date_timestamp_operation_addition_frequency_day_weekend_true():
@@ -425,7 +434,7 @@ def test29_date_operations_date_timestamp_operation_addition_frequency_day_weeke
     date = pd.Timestamp('2024-03-19 12:30:00')
     range = 5
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-12'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-14'
 
 
 def test30_date_operations_date_datetime_operation_addition_frequency_day_weekend_true():
@@ -433,7 +442,7 @@ def test30_date_operations_date_datetime_operation_addition_frequency_day_weeken
     date = datetime(year=2024, month=3, day=19)
     range = 9
 
-    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-06'
+    assert date_operations(date=date, operation='-', frequency='day', range=range, weekend=True) == 'Subtracted date with weekend: 2024-03-10'
 
 
 def test31_date_operations_date_string_operation_addition_frequency_month_weekend_true():

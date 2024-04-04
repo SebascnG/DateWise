@@ -1,8 +1,4 @@
-
-# Always prefer setuptools over distutils
 from setuptools import setup, find_packages
-
-# To use a consistent encoding
 from codecs import open
 from os import path
 
@@ -16,7 +12,7 @@ with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="datewise",
-    version="0.1.5",
+    version="0.1.6",
     description="Thesis Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -28,10 +24,6 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",

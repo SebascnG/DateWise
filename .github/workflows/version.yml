@@ -18,7 +18,7 @@ jobs:
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $current_version
 
-      - name: Check for old Version
+      - name: Checkout code master
         uses: actions/checkout@v4
         with:
           ref: master
