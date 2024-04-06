@@ -69,7 +69,7 @@ def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.T
     else:
         raise ValueError("Unknow data type of date variable")
 
-
+ 
 def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], date_2= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], operation=str) -> bool:
 
     """
@@ -89,7 +89,7 @@ def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Time
 
     """
 
-
+    
     if date_1 and date_2 and operation:
 
         if isinstance(date_1, str) and isinstance(date_2, str): 
@@ -141,7 +141,7 @@ def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Time
 
 
 def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
-
+ 
     """
     Find the start of the specific week based on a given date
 
@@ -152,7 +152,7 @@ def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp])
     :rtype: str
     """
 
-
+    
     if isinstance(date, str):
 
         fmt = identify_date_format(date)
@@ -174,7 +174,7 @@ def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp])
     else:
         raise ValueError("Unknow data type of date variable")
     
-
+    
 def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool) -> str:
 
     """
@@ -396,7 +396,7 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
     else: 
         raise ValueError('Missing mandatory variable.')               
 
-                
+
 def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], end: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool, frequency:str) -> list:
 
     """
