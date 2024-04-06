@@ -11,14 +11,14 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Check for current Version
         run: |
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $current_version
 
-      - name: Check for old Version
+      - name: Checkout code master
         uses: actions/checkout@v4
         with:
           ref: master

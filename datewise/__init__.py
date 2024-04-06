@@ -1,4 +1,4 @@
-#Bellow rows change import to a more user-qfriendly approach
+#Bellow rows change import to a more user-friendly approach
 
 from datewise.datewise import identify_date_format
 from datewise.datewise import date_comparison

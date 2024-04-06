@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from typing import Union
 import pandas as pd
 
-
 def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
 
     """
@@ -14,7 +13,6 @@ def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.T
     :return: Date format, if available, else message about error
     :rtype: str
     """
-
 
     formats = [
         "%m/%d/%Y", "%m-%d-%Y",
@@ -56,9 +54,6 @@ def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.T
         "%y-%m-%d %I %p", "%y/%m/%d %I %p",
     ]
 
-
-
-
     if isinstance(date, str):
         for fmt in formats:
             try:
@@ -72,9 +67,9 @@ def identify_date_format(date: Union[str, datetime, pd._libs.tslibs.timestamps.T
     elif isinstance(date, datetime):
         return "Datetime type, no specific format"
     else:
-        return "Unknow data type of date variable"
+        raise ValueError("Unknow data type of date variable")
 
-
+ 
 def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], date_2= Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], operation=str) -> bool:
 
     """
@@ -94,7 +89,7 @@ def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Time
 
     """
 
-
+    
     if date_1 and date_2 and operation:
 
         if isinstance(date_1, str) and isinstance(date_2, str): 
@@ -138,11 +133,15 @@ def date_comparison(date_1= Union[str, datetime, pd._libs.tslibs.timestamps.Time
             return date_comparison(date_1, date_2, operation)        
         else:
             
-            return "Provided inputs are uncomperable"  
+            raise ValueError("Provided inputs are uncomperable"  )
+    
+    else: 
+
+        raise ValueError('Missing variable')
 
 
 def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp]) -> str:
-
+ 
     """
     Find the start of the specific week based on a given date
 
@@ -153,7 +152,7 @@ def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp])
     :rtype: str
     """
 
-
+    
     if isinstance(date, str):
 
         fmt = identify_date_format(date)
@@ -173,9 +172,9 @@ def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp])
         return week_start(converted_date)
     
     else:
-        return "Unknow data type of date variable"
+        raise ValueError("Unknow data type of date variable")
     
-
+    
 def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool) -> str:
 
     """
@@ -228,7 +227,7 @@ def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], w
                 
         else:
 
-            return ("Couldn't process such date format.")
+            raise ValueError("Couldn't process such date format.")
     
     elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
@@ -238,7 +237,7 @@ def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], w
     
     else:
 
-        return "Unknow data type of date variable"
+        raise ValueError("Unknow data type of date variable")
 
 
 def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], operation:str, frequency:str, range:int, weekend:bool) -> str:
@@ -266,7 +265,7 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
     """
 
 
-    if date and operation and range:
+    if date and operation and frequency and range:
 
         if isinstance(date, str):
 
@@ -278,11 +277,9 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
 
             if frequency == 'day':
 
-                if weekend == True:
+                if weekend == False:
 
                     if operation == '+' : 
-
-                        weekday = date.weekday()
 
                         while range: 
 
@@ -290,18 +287,15 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
 
                                 date += timedelta(days=1)
                                 weekday = date.weekday()
-                                range -= 1
-                            
+                                range -= 1                            
                             else:
                                 
                                 date += timedelta(days=1)
                                 weekday = date.weekday()
 
-                        return(f'Added date with weekend: {date.strftime(fmt)}')
+                        return(f'Added date without weekend: {date.strftime(fmt)}')
                         
                     elif operation == '-':
-
-                        weekday = date.weekday()
 
                         while range: 
 
@@ -309,17 +303,15 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
 
                                 date -= timedelta(days=1)
                                 weekday = date.weekday()
-                                range -= 1
-                            
+                                range -= 1                            
                             else:
                                 
                                 date -= timedelta(days=1)
                                 weekday = date.weekday()
 
+                        return(f'Subtracted date without weekend: {date.strftime(fmt)}')
 
-                        return(f'Subtracted date with weekend: {date.strftime(fmt)}')
-
-                elif weekend == False:
+                elif weekend == True:
 
                     if operation == '+' : 
 
@@ -328,7 +320,7 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
                             date += timedelta(days=1)
                             range -= 1
 
-                        return(f'Added date without weekend: {date.strftime(fmt)}')
+                        return(f'Added date with weekend: {date.strftime(fmt)}')
                         
                     elif operation == '-':
 
@@ -337,7 +329,7 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
                             date -= timedelta(days=1)
                             range -= 1
                             
-                        return(f'Subtracted date without weekend: {date.strftime(fmt)}')
+                        return(f'Subtracted date with weekend: {date.strftime(fmt)}')
             
             elif frequency == 'month':
 
@@ -367,7 +359,6 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
                         month += 12
                         year -= 1
                         
-
                     date = datetime(year=year, month=month, day=day)
 
                     return(f'Subtracted date: {date.strftime(fmt)}')
@@ -401,10 +392,11 @@ def date_operations(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timest
             return date_operations(converted_date, operation, frequency, range, weekend)
         
         else:
+            raise ValueError("Unknow data type of date variable")   
+    else: 
+        raise ValueError('Missing mandatory variable.')               
 
-            return "Unknow data type of date variable"                  
 
-                
 def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], end: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], weekend:bool, frequency:str) -> list:
 
     """
@@ -427,7 +419,7 @@ def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Tim
     """
 
 
-    if start and end and frequency: 
+    if start and end and frequency and range: 
 
         if isinstance(start, str) and isinstance(end, str): 
 
@@ -544,12 +536,10 @@ def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Tim
         
         else:
             
-            return "Unknow data type of date variable"  
+            raise ValueError( "Unknow data type of date variable")  
     else:
 
-        return 'Missing mandatory variable.'
-
-    return f'Days between two dates are: {days_between}'
+        raise ValueError('Missing mandatory variable')
 
 
 def date_convert(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], desired_type:str, format:str):
@@ -597,4 +587,4 @@ def date_convert(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp
         return conversions[desired_result]
     
     else:
-        return "Unknow data type of date variable"  
+        raise ValueError("Unknow data type of date variable")  
