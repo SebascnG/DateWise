@@ -102,6 +102,17 @@ def test_6_date_comparison_different_data_types():
     assert date_comparison(date_1=date1, date_2=date2, operation='<') == True
 
 
+def test_7_date_comparison_different_data_types_missing_variable():
+
+    date1 = '2024-03-17'
+    date2 = (datetime.now() - timedelta(days=1))
+
+    with pytest.raises(TypeError) as exc_info:
+        date_comparison(date_1=date1, date_2=date2)
+
+    assert str(exc_info.value) == "date_comparison() missing 1 required positional argument: 'operation'"
+
+
 # week_start
 
 def test1_week_start_date_as_string():
@@ -201,6 +212,16 @@ def test9_week_end_date_as_string_weekend_true_date_unknown_format():
         week_end(date, True)
 
     assert str(exc_info.value) == "Couldn't process such date format."
+
+
+def test10_week_end_date_as_string_weekend_true_date_unknown_data_type():
+
+    date = 123
+
+    with pytest.raises(ValueError) as exc_info:
+        week_end(date, True)
+
+    assert str(exc_info.value) == "Unknow data type of input variable"
 
 
 # date_operations
@@ -492,6 +513,16 @@ def test36_date_operations_date_datetime_operation_addition_frequency_year_weeke
 
     assert date_operations(date=date, operation='-', frequency='year', range=range, weekend=True) == 'Subtracted date: 2021-03-19'
 
+def test37_date_operations_date_datetime_operation_incorrect_frequency_year_weekend_true():
+
+    date = datetime(year=2024, month=3, day=19)
+    range = 3
+
+    with pytest.raises(ValueError) as exc_info:
+        date_operations(date=date, operation='>', frequency='year', range=range, weekend=True)
+
+    assert str(exc_info.value) == "Incorrect data type or value in an input parameter"
+
 
 # range_calculation
     
@@ -735,6 +766,28 @@ def test30_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
+def test31_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_unknown():
+
+    start = pd.Timestamp('2024-03-19 12:30:00')
+    end = datetime(year=2024, month=4, day=2)
+
+    with pytest.raises(ValueError) as exc_info:
+        range_calculation(start=start, end=end, weekend=True, frequency='unknown')
+
+    assert str(exc_info.value) == "No such frequency"
+
+
+def test32_date1_incorrect_data_type_date2_datetime_range_calculation_weekend_true_frequncy_year():
+
+    start = 1
+    end = datetime(year=2024, month=4, day=2)
+
+    with pytest.raises(ValueError) as exc_info:
+        range_calculation(start=start, end=end, weekend=True, frequency='year')
+
+    assert str(exc_info.value) == "Incorrect data type or value in an input parameter"
+
+
 # date_convert
     
 def test1_date_convert_from_str_to_pandas():
@@ -779,7 +832,14 @@ def test6_date_convert_from_datetime_to_pandas():
     assert date_convert(date=date, desired_type='pandas', format='%Y-%m-%d') == pd.Timestamp('2024-03-19 00:00:00')
 
 
+def test7_date_convert_from_datetime_to_not_available_format():
 
+    date = 1
+
+    with pytest.raises(ValueError) as exc_info:
+        date_convert(date=date, desired_type='numpy', format='%Y-%m-%d')
+
+    assert str(exc_info.value) == "Unknow data type of input variable"
 
 
 
