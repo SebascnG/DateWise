@@ -14,9 +14,10 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Check for current Version
+        id: current_version
         run: |
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
-          echo $current_version
+          echo "::set-output name=current_version::$current_version"
 
       - name: Checkout code master
         uses: actions/checkout@v4
@@ -24,17 +25,19 @@ jobs:
           ref: master
 
       - name: Check for old Version
+        id: previous_version
         run: |
           previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
-          echo $previous_version
+          echo "::set-output name=previous_version::$previous_version"
 
       - name: Compare versions
         run: |      
-          if [ $previous_version -lt $current_version ]; then
-            echo "Version changed from $previous_version to $current_version"
+          if [ "${{ steps.previous_version.outputs.previous_version }}" \< "${{ steps.current_version.outputs.current_version }}" ]; then
+            echo "Version changed from ${{ steps.previous_version.outputs.previous_version }} to ${{ steps.current_version.outputs.current_version }}"
             exit 0  # Exit with success status to allow the pull request merge
           else
             echo "Version change detected, but the new version isn't greater than the old one"
+            echo "Version changed from ${{ steps.previous_version.outputs.previous_version }} to ${{ steps.current_version.outputs.current_version }}"
             exit 1  # Exit with failure status to disallow the pull request merge
           fi
-
+      
