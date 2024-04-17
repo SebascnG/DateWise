@@ -30,7 +30,7 @@ jobs:
 
       - name: Compare versions
         run: |      
-          if [ $previous_version -lt $current_version ]; then
+          if [ "$previous_version" -lt "$current_version" ]; then
             echo "Version changed from $previous_version to $current_version"
             exit 0  # Exit with success status to allow the pull request merge
           else
