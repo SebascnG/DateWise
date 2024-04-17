@@ -16,7 +16,6 @@ jobs:
       - name: Check for current Version
         run: |
           current_version=$(grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
-          type $current_version
           echo $current_version
 
       - name: Checkout code master
@@ -27,7 +26,6 @@ jobs:
       - name: Check for old Version
         run: |
           previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
-          type $previous_version
           echo $previous_version
 
       - name: Compare versions
