@@ -513,6 +513,7 @@ def test36_date_operations_date_datetime_operation_addition_frequency_year_weeke
 
     assert date_operations(date=date, operation='-', frequency='year', range=range, weekend=True) == 'Subtracted date: 2021-03-19'
 
+
 def test37_date_operations_date_datetime_operation_incorrect_frequency_year_weekend_true():
 
     date = datetime(year=2024, month=3, day=19)

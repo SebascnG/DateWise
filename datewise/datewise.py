@@ -169,7 +169,7 @@ def week_start(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp])
             return date_start
         
         else:
-            return ValueError("Unable to find start of the week for a date with such format.")
+            raise ValueError("Unable to find start of the week for a date with such format.")
     
     elif isinstance(date, (pd._libs.tslibs.timestamps.Timestamp, datetime)):
 
