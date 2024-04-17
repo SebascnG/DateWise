@@ -30,13 +30,11 @@ jobs:
           previous_version=$(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
           echo $previous_version
         env:
-          previous_version: $previous_version
+          previous_version: $(git grep -oE 'version="[0-9.]+"' setup.py | cut -d '"' -f 2)
 
       - name: Compare versions
         run: |      
-          echo $current_version
-          echo $previous_version
-          if [$previous_version -lt $current_version]; then
+          if [ "$previous_version" -lt "$current_version" ]; then
             echo "Version changed from $previous_version to $current_version"
             exit 0  # Exit with success status to allow the pull request merge
           else
@@ -44,4 +42,5 @@ jobs:
             echo "Version changed from $previous_version to $current_version"
             exit 1  # Exit with failure status to disallow the pull request merge
           fi
+        
 
