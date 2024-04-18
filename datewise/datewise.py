@@ -477,21 +477,21 @@ def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Tim
             
             elif frequency == 'week':
 
-                week_difference = len(days_between) / 7
+                if not weekend:
 
-                if type(week_difference) != int:
+                    week_difference = len(days_between) / 5
+                    
+                    weeks = int(week_difference)
+                    days = len(days_between) % 5
 
-                    if not weekend:
-                        
-                        weeks = int(week_difference)
-                        days = len(days_between) % 5
+                else:
 
-                    else:
+                    week_difference = len(days_between) / 7
 
-                        weeks = int(week_difference)
-                        days = len(days_between) % 7
+                    weeks = int(week_difference)
+                    days = len(days_between) % 7
 
-                return f"Difference between two dates is {weeks} week(s) and {days} days. If you want to see specific dates, switch to format='day'"
+                return f"Difference between two dates is {weeks} week(s) and {days} days. If you want to see specific dates, switch to format='day'" 
 
             elif frequency == 'month':
 
