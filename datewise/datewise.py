@@ -481,7 +481,7 @@ def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Tim
 
                 if type(week_difference) != int:
 
-                    if weekend:
+                    if not weekend:
                         
                         weeks = int(week_difference)
                         days = len(days_between) % 5

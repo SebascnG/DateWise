@@ -532,7 +532,7 @@ def test1_date1_string_date2_string_range_calculation_weekend_false_frequncy_day
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test2_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_day():
@@ -540,7 +540,7 @@ def test2_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test3_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequncy_day():
@@ -548,7 +548,7 @@ def test3_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test4_date1_string_date2_string_range_calculation_weekend_false_frequncy_week():
@@ -556,7 +556,7 @@ def test4_date1_string_date2_string_range_calculation_weekend_false_frequncy_wee
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
 
 
 def test5_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_week():
@@ -564,7 +564,7 @@ def test5_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
 
 
 def test6_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequncy_week():
@@ -572,7 +572,7 @@ def test6_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
 
 
 def test7_date1_string_date2_string_range_calculation_weekend_false_frequncy_month():
@@ -580,7 +580,7 @@ def test7_date1_string_date2_string_range_calculation_weekend_false_frequncy_mon
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='month') ==  "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='month') ==  "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test8_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_month():
@@ -588,7 +588,7 @@ def test8_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='month') == "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='month') == "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test9_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequncy_month():
@@ -596,7 +596,7 @@ def test9_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='month') == "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='month') == "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test10_date1_string_date2_string_range_calculation_weekend_false_frequncy_quarter():
@@ -604,7 +604,7 @@ def test10_date1_string_date2_string_range_calculation_weekend_false_frequncy_qu
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test11_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_quarter():
@@ -612,7 +612,7 @@ def test11_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test12_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequncy_quarter():
@@ -620,7 +620,7 @@ def test12_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequn
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test13_date1_string_date2_string_range_calculation_weekend_false_frequncy_year():
@@ -628,7 +628,7 @@ def test13_date1_string_date2_string_range_calculation_weekend_false_frequncy_ye
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test14_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy_year():
@@ -636,7 +636,7 @@ def test14_date1_string_date2_timestamp_range_calculation_weekend_false_frequncy
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test15_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequncy_year():
@@ -644,7 +644,7 @@ def test15_date1_timestamp_date2_datetime_range_calculation_weekend_false_frequn
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=False, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
 
 
 def test16_date1_string_date2_string_range_calculation_weekend_true_frequncy_day():
@@ -652,7 +652,7 @@ def test16_date1_string_date2_string_range_calculation_weekend_true_frequncy_day
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test17_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_day():
@@ -660,7 +660,7 @@ def test17_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test18_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_day():
@@ -668,7 +668,7 @@ def test18_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Business days between two dates are: ['2024-04-01', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-22', '2024-03-21', '2024-03-20']"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='day') == "Days between two dates are: ['2024-04-01', '2024-03-31', '2024-03-30', '2024-03-29', '2024-03-28', '2024-03-27', '2024-03-26', '2024-03-25', '2024-03-24', '2024-03-23', '2024-03-22', '2024-03-21', '2024-03-20']"
 
 
 def test19_date1_string_date2_string_range_calculation_weekend_true_frequncy_week():
@@ -676,7 +676,7 @@ def test19_date1_string_date2_string_range_calculation_weekend_true_frequncy_wee
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
 
 
 def test20_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_week():
@@ -684,7 +684,7 @@ def test20_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
 
 
 def test21_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_week():
@@ -692,7 +692,7 @@ def test21_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 4 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='week') == "Difference between two dates is 1 week(s) and 6 days. If you want to see specific dates, switch to format='day'"
 
 
 def test22_date1_string_date2_string_range_calculation_weekend_true_frequncy_month():
@@ -700,7 +700,7 @@ def test22_date1_string_date2_string_range_calculation_weekend_true_frequncy_mon
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='month') ==  "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='month') ==  "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test23_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_month():
@@ -708,7 +708,7 @@ def test23_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='month') == "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='month') == "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test24_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_month():
@@ -716,7 +716,7 @@ def test24_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='month') == "Difference between two dates is 0 month(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='month') == "Difference between two dates is 0 month(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test25_date1_string_date2_string_range_calculation_weekend_true_frequncy_quarter():
@@ -724,7 +724,7 @@ def test25_date1_string_date2_string_range_calculation_weekend_true_frequncy_qua
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test26_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_quarter():
@@ -732,7 +732,7 @@ def test26_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test27_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_quarter():
@@ -740,7 +740,7 @@ def test27_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='quarter') == "Difference between two dates is 0 quarter(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test28_date1_string_date2_string_range_calculation_weekend_true_frequncy_year():
@@ -748,7 +748,7 @@ def test28_date1_string_date2_string_range_calculation_weekend_true_frequncy_yea
     start = '2024-03-19'
     end = '2024-04-02'
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test29_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_year():
@@ -756,7 +756,7 @@ def test29_date1_string_date2_timestamp_range_calculation_weekend_true_frequncy_
     start = '2024-03-19'
     end =  pd.Timestamp('2024-04-02 12:30:00')
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test30_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_year():
@@ -764,7 +764,7 @@ def test30_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequnc
     start = pd.Timestamp('2024-03-19 12:30:00')
     end = datetime(year=2024, month=4, day=2)
 
-    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 9 days. If you want to see specific dates, switch to format='day'"
+    assert range_calculation(start=start, end=end, weekend=True, frequency='year') == "Difference between two dates is 0 year(s) and 13 days. If you want to see specific dates, switch to format='day'"
 
 
 def test31_date1_timestamp_date2_datetime_range_calculation_weekend_true_frequncy_unknown():
