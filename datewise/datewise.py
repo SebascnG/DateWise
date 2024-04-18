@@ -450,7 +450,7 @@ def range_calculation(start: Union[str, datetime, pd._libs.tslibs.timestamps.Tim
 
             days_between = []
 
-            if weekend:
+            if not weekend:
 
                 while max_date != min_date + timedelta(days=1):
 
