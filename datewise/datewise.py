@@ -207,7 +207,7 @@ def week_end(date: Union[str, datetime, pd._libs.tslibs.timestamps.Timestamp], w
 
             if weekend == False:
 
-                if weekday < 3:   
+                if weekday <= 3:   
 
                     date_week_end = (datetime.strptime(date, fmt) + timedelta(days=4 - weekday)).strftime(fmt)
                     return(f'Business Week ends: {date_week_end}')
