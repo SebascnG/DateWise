@@ -1,7 +1,7 @@
 import os
 import sys
 
-# Setting up the root folder
+# Setting up the path to the root folder
 sys.path.insert(0, os.path.abspath('..'))
 
 project = 'datewise'
